@@ -3,16 +3,19 @@ import { StyleSheet, Text, View } from 'react-native';
 import Home from './pages/Home';
 import About from './pages/About';
 import Missions from './pages/Missions';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator()
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Very cool!</Text>
-      <Home/>
-      <About/>
-      <Missions/>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name='Home' component={Home}/>
+        <Stack.Screen name='Missions' component={Missions}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
