@@ -13,9 +13,16 @@ const Stack = createNativeStackNavigator<HomeStackParamsList>()
 const HomeStackNavigator = () => {
 
     return (
-        <Stack.Navigator>
-            <Stack.Screen name='Home' component={Home}/>
-            <Stack.Screen name='Missions' component={Missions}/>
+        <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen 
+                name='Home' 
+                component={Home}/>
+            <Stack.Screen 
+                name='Missions' 
+                component={Missions} 
+                options={({route})=>({
+                    title:route.params.title
+                })}/>
         </Stack.Navigator>
 
     )
