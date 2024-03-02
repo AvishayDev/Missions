@@ -8,7 +8,6 @@ interface MissionsProps extends HomeStackNavigatorMissionsProps{
 }
 
 const Missions: React.FC<MissionsProps> = ({navigation,route}:MissionsProps) => {
-
     return (
         <Text>Missions Page</Text>
     )

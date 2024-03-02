@@ -8,7 +8,6 @@ interface HomeProps extends HomeStackNavigatorHomeProps{
 }
 
 const Home: React.FC<HomeProps> = ({navigation, route}:HomeProps) => {
-
     return (
         <>
             <Text>Home Page</Text>

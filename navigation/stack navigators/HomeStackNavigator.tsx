@@ -2,21 +2,28 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "../../pages/Home";
 import Missions from "../../pages/Missions";
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { DrawerNavigatorHomeProps } from "../DrawerNavigator";
 
 type HomeStackParamsList = {
-    Home: undefined
+    Main: undefined
     Missions: {title?: string}
 }
   
 const Stack = createNativeStackNavigator<HomeStackParamsList>()
 
-const HomeStackNavigator = () => {
+const HomeStackNavigator = ( {}: DrawerNavigatorHomeProps) => {
 
     return (
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator 
+            initialRouteName="Main"
+            // screenOptions={({ navigation })=> ({
+            //     headerShown:navigation.canGoBack()
+            // })}
+            >
             <Stack.Screen 
-                name='Home' 
-                component={Home}/>
+                name='Main' 
+                component={Home}
+                />
             <Stack.Screen 
                 name='Missions' 
                 component={Missions} 
@@ -28,6 +35,6 @@ const HomeStackNavigator = () => {
     )
 }
 
-export type HomeStackNavigatorHomeProps = NativeStackScreenProps<HomeStackParamsList,'Home'>
+export type HomeStackNavigatorHomeProps = NativeStackScreenProps<HomeStackParamsList,'Main'>
 export type HomeStackNavigatorMissionsProps = NativeStackScreenProps<HomeStackParamsList,'Missions'>
 export default HomeStackNavigator
