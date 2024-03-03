@@ -1,7 +1,7 @@
-function getRandomElement<T>(list: T[]): T | undefined {
-  if (list.length === 0) {
-    return undefined; // Return undefined if the list is empty
-  }
-  const randomIndex = Math.floor(Math.random() * list.length);
-  return list[randomIndex];
-}
+export const randInt = (min: number, max: number): number => {
+  return Math.floor(Math.random() * (max - min) + min);
+};
+
+export const getRandomElement = <T>(list: T[]): T | undefined => {
+  return list[randInt(0, list.length)];
+};

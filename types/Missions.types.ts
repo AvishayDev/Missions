@@ -1,11 +1,11 @@
-export type RootMission = {
-  id: string;
+export type RootMissionStoreType = {
+  key: string;
   title: string;
-  missions: Record<string, Mission>;
+  missions: Record<string, MissionStoreType>;
 };
 
-export type Mission = {
-  id: string;
+export type MissionStoreType = {
+  key: string;
   parent: string | null;
   title: string;
   children: string[];

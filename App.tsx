@@ -1,11 +1,14 @@
-import { NavigationContainer } from '@react-navigation/native';
-import HomeStackNavigator from './navigation/stack navigators/HomeStackNavigator';
+import { Provider } from 'react-redux';
 import AppNavigator from './navigation/AppNavigator';
+import { store } from './redux/app/store';
+
 
 
 export default function App() {
   return (
-    <AppNavigator/>
+    <Provider store={store}>
+      <AppNavigator/>
+    </Provider>
   );
 }
 

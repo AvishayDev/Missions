@@ -1,21 +1,26 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Mission } from "../../types/Missions.types";
+import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
+import { MissionStoreType } from "../../types/Missions.types";
 import { RootState } from "../app/store";
 
-type MissionsSliceState = Record<string, Mission>;
+type MissionsSliceState = Record<string, MissionStoreType>;
 
 const initialState: MissionsSliceState = {};
 
-export const RootMissionsSlice = createSlice({
+export const MissionsSlice = createSlice({
   name: "missions",
   initialState,
   reducers: {
     addMission: (state, action: PayloadAction<string>) => {},
+    setMissions: (state, action: PayloadAction<MissionsSliceState>) =>
+      action.payload,
   },
 });
 
-export const { addMission } = RootMissionsSlice.actions;
+export const { addMission, setMissions } = MissionsSlice.actions;
 
-export const selectMission = (state: RootState) => state.rootMissions;
+const selectMission = (state: RootState) => state.missions;
+export const MissionsSelector = createSelector(selectMission, (missions) =>
+  Object.values(missions)
+);
 
-export default RootMissionsSlice.reducer;
+export default MissionsSlice.reducer;
