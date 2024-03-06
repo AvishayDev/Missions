@@ -10,4 +10,12 @@ export const homeStyles = StyleSheet.create({
     backgroundColor: "white",
     flex: 1,
   },
+  rootMissionsContainer: {
+    marginRight: 20,
+    marginLeft: 20,
+    marginBottom: 20,
+    flex: 1,
+    borderRadius: 20,
+    backgroundColor: "gray",
+  },
 });

@@ -47,7 +47,14 @@ export const RootMissionsSlice = createSlice({
   name: "rootMissions",
   initialState,
   reducers: {
-    addRootMission: (state, action: PayloadAction<string>) => {},
+    addRootMission: (state, action: PayloadAction<void>) => {
+      const newKey = Object.keys(state).length + 1;
+      state[newKey] = {
+        key: newKey.toString(),
+        missions: {},
+        title: `kukuriku${newKey}`,
+      };
+    },
   },
 });
 

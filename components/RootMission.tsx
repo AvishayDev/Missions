@@ -8,7 +8,6 @@ import { ROUTES } from "../constants/routes"
 
 interface RootMissionProps extends HomeStackNavigatorHomeProps {
     data: RootMissionStoreType
-
 }
 
 
