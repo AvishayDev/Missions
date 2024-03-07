@@ -1,29 +1,31 @@
 import { Text, TouchableOpacity } from "react-native"
-import { RootMissionStoreType } from "../types/Missions.types"
 import { HomeStackNavigatorHomeProps } from "../types/routes.types"
-import { useAppDispatch } from "../redux/app/hooks"
+import { useAppDispatch, useAppSelector } from "../redux/app/hooks"
 import { setMissions } from "../redux/features/MissionsSlice"
 import { ROUTES } from "../constants/routes"
+import { RootMissionMissionsSelector } from "../redux/features/RootMissionsSlice"
 
 
 interface RootMissionProps extends HomeStackNavigatorHomeProps {
-    data: RootMissionStoreType
+    key: string
+    title: string
 }
 
 
 
-const RootMission:React.FC<RootMissionProps> = ({data, navigation}:RootMissionProps) => {
+const RootMission:React.FC<RootMissionProps> = ({key,title, navigation}:RootMissionProps) => {
 
     const dispatch = useAppDispatch()
 
     const handlePress = () => {
-        dispatch(setMissions(data.missions))
-        navigation.navigate(ROUTES.HOME_STACK.Missions,{title:data.title})
+        const missions = useAppSelector(RootMissionMissionsSelector(key))
+        dispatch(setMissions(missions))
+        navigation.navigate(ROUTES.HOME_STACK.Missions,{title})
     }
 
     return (
         <TouchableOpacity onPress={handlePress}>
-            <Text>{data.title}</Text>
+            <Text>{title}</Text>
         </TouchableOpacity>
 
     )

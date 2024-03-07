@@ -5,11 +5,11 @@ import { RootState } from "../app/store";
 type RootMissionsSliceState = Record<string, RootMissionStoreType>;
 
 const initialState: RootMissionsSliceState = {
-  "1": {
-    key: "1",
+  1: {
+    index: 1,
     missions: {
-      "1": {
-        key: "1",
+      1: {
+        index: 1,
         parent: null,
         title: "111111",
         children: [],
@@ -17,11 +17,11 @@ const initialState: RootMissionsSliceState = {
     },
     title: "kukuriku",
   },
-  "2": {
-    key: "2",
+  2: {
+    index: 2,
     missions: {
-      "2": {
-        key: "2",
+      2: {
+        index: 2,
         parent: null,
         title: "222222",
         children: [],
@@ -29,11 +29,11 @@ const initialState: RootMissionsSliceState = {
     },
     title: "kukuriku2",
   },
-  "3": {
-    key: "3",
+  3: {
+    index: 3,
     missions: {
-      "3": {
-        key: "3",
+      3: {
+        index: 3,
         parent: null,
         title: "3333333",
         children: [],
@@ -48,9 +48,9 @@ export const RootMissionsSlice = createSlice({
   initialState,
   reducers: {
     addRootMission: (state, action: PayloadAction<void>) => {
-      const newKey = Object.keys(state).length + 1;
+      const newKey = Object.keys(state).length;
       state[newKey] = {
-        key: newKey.toString(),
+        index: newKey,
         missions: {},
         title: `kukuriku${newKey}`,
       };
@@ -63,7 +63,14 @@ export const { addRootMission } = RootMissionsSlice.actions;
 const selectRootMissions = (state: RootState) => state.rootMissions;
 export const RootMissionsSelector = createSelector(
   selectRootMissions,
-  (rootMissions) => Object.values(rootMissions)
+  (rootMissions) =>
+    Object.entries(rootMissions)
+      .map(([key, { index, title }]) => ({ key, index, title }))
+      .sort((a, b) => a.index - b.index)
 );
+
+export const RootMissionMissionsSelector =
+  (key: string) => (state: RootState) =>
+    state.rootMissions[key]?.missions;
 
 export default RootMissionsSlice.reducer;

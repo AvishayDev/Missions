@@ -17,7 +17,7 @@ interface HomeProps extends HomeStackNavigatorHomeProps{
 
 const Home: React.FC<HomeProps> = ({navigation, route}:HomeProps) => {
     const welcomeText = useMemo(()=>getRandomElement(WELCOME_MESSAGES),[])
-    const rootMissions:RootMissionStoreType[] = useAppSelector(RootMissionsSelector)
+    const rootMissions = useAppSelector(RootMissionsSelector)
     
 
     return (
@@ -27,7 +27,7 @@ const Home: React.FC<HomeProps> = ({navigation, route}:HomeProps) => {
                 <View style={homeStyles.rootMissionsContainer} >
                     <FlatList
                         data={rootMissions}
-                        renderItem={({ item })=><RootMission data={item} navigation={navigation} route={route}/>}
+                        renderItem={({ item })=><RootMission key={item.key} title={item.title} navigation={navigation} route={route}/>}
                     />
                 </View>
             </TouchableWithoutFeedback>
