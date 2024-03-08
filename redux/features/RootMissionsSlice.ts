@@ -1,76 +1,76 @@
 import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import { RootMissionStoreType } from "../../types/Missions.types";
 import { RootState } from "../app/store";
+import { ActionSheetIOS } from "react-native";
 
-type RootMissionsSliceState = Record<string, RootMissionStoreType>;
+type RootMissionsSliceState = {
+  rootMissions: RootMissionStoreType[];
+};
 
 const initialState: RootMissionsSliceState = {
-  1: {
-    index: 1,
-    missions: {
-      1: {
-        index: 1,
-        parent: null,
-        title: "111111",
-        children: [],
+  rootMissions: [
+    {
+      key: 0,
+      missions: {
+        1: {
+          index: 1,
+          parent: null,
+          title: "111111",
+          children: [],
+        },
       },
+      title: "kukuriku",
     },
-    title: "kukuriku",
-  },
-  2: {
-    index: 2,
-    missions: {
-      2: {
-        index: 2,
-        parent: null,
-        title: "222222",
-        children: [],
+    {
+      key: 1,
+      missions: {
+        2: {
+          index: 2,
+          parent: null,
+          title: "222222",
+          children: [],
+        },
       },
+      title: "kukuriku2",
     },
-    title: "kukuriku2",
-  },
-  3: {
-    index: 3,
-    missions: {
-      3: {
-        index: 3,
-        parent: null,
-        title: "3333333",
-        children: [],
+    {
+      key: 2,
+      missions: {
+        3: {
+          index: 3,
+          parent: null,
+          title: "3333333",
+          children: [],
+        },
       },
+      title: "kukuriku3",
     },
-    title: "kukuriku3",
-  },
+  ],
 };
 
 export const RootMissionsSlice = createSlice({
   name: "rootMissions",
   initialState,
   reducers: {
-    addRootMission: (state, action: PayloadAction<void>) => {
-      const newKey = Object.keys(state).length;
-      state[newKey] = {
-        index: newKey,
+    addRootMission: (state, action: PayloadAction<string>) => {
+      state.rootMissions.push({
+        key: state.rootMissions.length,
         missions: {},
-        title: `kukuriku${newKey}`,
-      };
+        title: action.payload,
+      });
+    },
+    removeRootMission: (state, action: PayloadAction<number>) => {
+      const removeIndex = state.rootMissions.findIndex(
+        (rootMission) => rootMission.key === action.payload
+      );
+      state.rootMissions.splice(removeIndex, 1);
     },
   },
 });
 
 export const { addRootMission } = RootMissionsSlice.actions;
 
-const selectRootMissions = (state: RootState) => state.rootMissions;
-export const RootMissionsSelector = createSelector(
-  selectRootMissions,
-  (rootMissions) =>
-    Object.entries(rootMissions)
-      .map(([key, { index, title }]) => ({ key, index, title }))
-      .sort((a, b) => a.index - b.index)
-);
-
-export const RootMissionMissionsSelector =
-  (key: string) => (state: RootState) =>
-    state.rootMissions[key]?.missions;
+export const RootMissionsSelector = (state: RootState) =>
+  state.rootMissions.rootMissions;
 
 export default RootMissionsSlice.reducer;

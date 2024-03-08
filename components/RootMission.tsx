@@ -3,22 +3,20 @@ import { HomeStackNavigatorHomeProps } from "../types/routes.types"
 import { useAppDispatch, useAppSelector } from "../redux/app/hooks"
 import { setMissions } from "../redux/features/MissionsSlice"
 import { ROUTES } from "../constants/routes"
-import { RootMissionMissionsSelector } from "../redux/features/RootMissionsSlice"
+import { RootMissionStoreType } from "../types/Missions.types"
 
 
 interface RootMissionProps extends HomeStackNavigatorHomeProps {
-    key: string
-    title: string
+    data: RootMissionStoreType
 }
 
 
 
-const RootMission:React.FC<RootMissionProps> = ({key,title, navigation}:RootMissionProps) => {
-
+const RootMission:React.FC<RootMissionProps> = ({data, navigation}:RootMissionProps) => {
     const dispatch = useAppDispatch()
+    const { title, missions } = data
 
     const handlePress = () => {
-        const missions = useAppSelector(RootMissionMissionsSelector(key))
         dispatch(setMissions(missions))
         navigation.navigate(ROUTES.HOME_STACK.Missions,{title})
     }
