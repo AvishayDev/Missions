@@ -68,7 +68,7 @@ export const RootMissionsSlice = createSlice({
   },
 });
 
-export const { addRootMission } = RootMissionsSlice.actions;
+export const { addRootMission, removeRootMission } = RootMissionsSlice.actions;
 
 export const RootMissionsSelector = (state: RootState) =>
   state.rootMissions.rootMissions;

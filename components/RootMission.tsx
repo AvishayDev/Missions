@@ -1,15 +1,16 @@
-import { Text, TouchableOpacity } from "react-native"
+import { Button, Text, TouchableOpacity } from "react-native"
 import { HomeStackNavigatorHomeProps } from "../types/routes.types"
 import { useAppDispatch, useAppSelector } from "../redux/app/hooks"
 import { setMissions } from "../redux/features/MissionsSlice"
 import { ROUTES } from "../constants/routes"
 import { RootMissionStoreType } from "../types/Missions.types"
+import { globalStyles } from "../styles/globals.styles"
+import { removeRootMission } from "../redux/features/RootMissionsSlice"
 
 
 interface RootMissionProps extends HomeStackNavigatorHomeProps {
     data: RootMissionStoreType
 }
-
 
 
 const RootMission:React.FC<RootMissionProps> = ({data, navigation}:RootMissionProps) => {
@@ -22,7 +23,8 @@ const RootMission:React.FC<RootMissionProps> = ({data, navigation}:RootMissionPr
     }
 
     return (
-        <TouchableOpacity onPress={handlePress}>
+        <TouchableOpacity style={globalStyles.rowContainer} onPress={handlePress}>
+            <Button title="del" onPress={()=>dispatch(removeRootMission(data.key))}/>
             <Text>{title}</Text>
         </TouchableOpacity>
 
