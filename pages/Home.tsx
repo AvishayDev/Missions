@@ -21,6 +21,10 @@ const Home: React.FC<HomeProps> = ({navigation, route}:HomeProps) => {
     const rootMissions = useAppSelector(RootMissionsSelector)
     const [newMissionText, setNewMissionText] = useState('')
     
+    const handlePress = () => {
+        dispatch(addRootMission(newMissionText))
+        setNewMissionText('')
+    }
 
     return (
         <View style={homeStyles.container}>
@@ -32,7 +36,7 @@ const Home: React.FC<HomeProps> = ({navigation, route}:HomeProps) => {
                     />
                     <View style={globalStyles.rowContainer}>
                         <TextInput value={newMissionText} onChangeText={setNewMissionText}/>
-                        <Button disabled={!!newMissionText} title="add" onPress={()=>dispatch(addRootMission(newMissionText))}/>
+                        <Button disabled={!newMissionText} title="add" onPress={handlePress}/>
                     </View>
                 </View>
         </View>
