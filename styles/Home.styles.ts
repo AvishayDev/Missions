@@ -15,7 +15,5 @@ export const homeStyles = StyleSheet.create({
     marginLeft: 20,
     marginBottom: 20,
     flex: 1,
-    borderRadius: 20,
-    backgroundColor: "gray",
   },
 });

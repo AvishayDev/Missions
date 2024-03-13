@@ -1,7 +1,9 @@
 import { Text, View, FlatList } from "react-native"
 import { HomeStackNavigatorMissionsProps } from "../types/routes.types"
 import { useAppSelector } from "../redux/app/hooks"
-import { MissionsSelector } from "../redux/features/MissionsSlice"
+import { MissionKeysSelector } from "../redux/features/MissionsSlice"
+import { globalStyles } from "../styles/globals.styles"
+import Mission from "../components/Mission"
 
 
 
@@ -11,14 +13,18 @@ interface MissionsProps extends HomeStackNavigatorMissionsProps{
 
 const Missions: React.FC<MissionsProps> = ({navigation,route}:MissionsProps) => {
 
-    const missions = useAppSelector(MissionsSelector)
+    const missions = useAppSelector(MissionKeysSelector)
     return (
         <View>
-            <Text>Missions Page</Text>
-            <FlatList 
-                data={missions}
-                renderItem={({item})=><Text>{item.title}</Text>}
-            />
+            <Text>{route.params.title}</Text>
+            <View style={globalStyles.cardContainer}>
+                <FlatList 
+                    data={missions}
+                    keyExtractor={item=>item}
+                    renderItem={({item})=><Mission id={item}/>}
+                />
+
+            </View>
 
         </View>
     )

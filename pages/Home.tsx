@@ -29,7 +29,7 @@ const Home: React.FC<HomeProps> = ({navigation, route}:HomeProps) => {
     return (
         <View style={homeStyles.container}>
             <Text style={homeStyles.welcomeText}>{welcomeText}</Text>
-                <View style={homeStyles.rootMissionsContainer} >
+                <View style={[homeStyles.rootMissionsContainer,globalStyles.cardContainer]} >
                     <FlatList
                         data={rootMissions}
                         renderItem={({ item })=><RootMission data={item} navigation={navigation} route={route}/>}

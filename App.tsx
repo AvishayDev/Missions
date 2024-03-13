@@ -1,3 +1,5 @@
+import 'react-native-gesture-handler';
+import 'react-native-reanimated';
 import { Provider } from 'react-redux';
 import AppNavigator from './navigation/AppNavigator';
 import { store } from './redux/app/store';

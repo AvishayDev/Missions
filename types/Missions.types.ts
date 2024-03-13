@@ -5,6 +5,7 @@ export type RootMissionStoreType = {
 };
 
 export type MissionStoreType = {
+  open: boolean;
   index: number;
   parent: string | null;
   title: string;

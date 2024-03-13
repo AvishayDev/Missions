@@ -19,8 +19,10 @@ export const MissionsSlice = createSlice({
 export const { addMission, setMissions } = MissionsSlice.actions;
 
 const selectMission = (state: RootState) => state.missions;
-export const MissionsSelector = createSelector(selectMission, (missions) =>
-  Object.values(missions)
+export const MissionKeysSelector = createSelector(selectMission, (missions) =>
+  Object.keys(missions)
 );
 
+export const MissionSelector = (key: string) => (state: RootState) =>
+  state.missions[key];
 export default MissionsSlice.reducer;
