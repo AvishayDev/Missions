@@ -60,10 +60,9 @@ export const RootMissionsSlice = createSlice({
       });
     },
     removeRootMission: (state, action: PayloadAction<number>) => {
-      const removeIndex = state.rootMissions.findIndex(
-        (rootMission) => rootMission.key === action.payload
+      state.rootMissions = state.rootMissions.filter(
+        (rootMission) => rootMission.key !== action.payload
       );
-      state.rootMissions.splice(removeIndex, 1);
     },
   },
 });
