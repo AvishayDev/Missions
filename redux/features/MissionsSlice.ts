@@ -13,14 +13,28 @@ export const MissionsSlice = createSlice({
     addMission: (state, action: PayloadAction<string>) => {},
     setMissions: (state, action: PayloadAction<MissionsSliceState>) =>
       action.payload,
+    openMissionChildren: (state, action: PayloadAction<string>) => {
+      state[action.payload].open = !state[action.payload].open;
+    },
+    removeMission: (state, action: PayloadAction<string>) => {
+      const { parent } = state[action.payload];
+      if (parent) {
+        state[parent].children = state[parent].children.filter(
+          (child) => child !== action.payload
+        );
+        if (state[parent].children.length === 0) state[parent].open = false;
+      }
+      delete state[action.payload];
+    },
   },
 });
 
-export const { addMission, setMissions } = MissionsSlice.actions;
+export const { addMission, setMissions, openMissionChildren, removeMission } =
+  MissionsSlice.actions;
 
 const selectMission = (state: RootState) => state.missions;
 export const MissionKeysSelector = createSelector(selectMission, (missions) =>
-  Object.keys(missions)
+  Object.keys(missions).filter((key) => !missions[key].parent)
 );
 
 export const MissionSelector = (key: string) => (state: RootState) =>

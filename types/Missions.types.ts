@@ -1,5 +1,5 @@
 export type RootMissionStoreType = {
-  key: number;
+  key: string;
   title: string;
   missions: Record<string, MissionStoreType>;
 };
