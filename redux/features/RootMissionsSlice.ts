@@ -4,7 +4,6 @@ import { RootState } from "../app/store";
 
 type RootMissionsSliceState = {
   rootMissions: Record<string, RootMissionStoreType>;
-  totalRootMissions: number;
 };
 
 const initialState: RootMissionsSliceState = {
@@ -56,7 +55,6 @@ const initialState: RootMissionsSliceState = {
       title: "kukuriku3",
     },
   },
-  totalRootMissions: 3,
 };
 
 export const RootMissionsSlice = createSlice({
@@ -64,13 +62,12 @@ export const RootMissionsSlice = createSlice({
   initialState,
   reducers: {
     addRootMission: (state, action: PayloadAction<string>) => {
-      const key = state.totalRootMissions.toString();
+      const key = Date.now().toString();
       state.rootMissions[key] = {
         key,
         missions: {},
         title: action.payload,
       };
-      state.totalRootMissions++;
     },
     removeRootMission: (state, action: PayloadAction<string>) => {
       delete state.rootMissions[action.payload];
