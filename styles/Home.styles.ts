@@ -16,4 +16,7 @@ export const homeStyles = StyleSheet.create({
     marginBottom: 20,
     flex: 1,
   },
+  addTextInput: {
+    width: 100,
+  },
 });

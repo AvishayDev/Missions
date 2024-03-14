@@ -32,11 +32,11 @@ export const MissionsSlice = createSlice({
 export const { addMission, setMissions, openMissionChildren, removeMission } =
   MissionsSlice.actions;
 
-const selectMission = (state: RootState) => state.missions;
-export const MissionKeysSelector = createSelector(selectMission, (missions) =>
+const selectMissions = (state: RootState) => state.missions;
+export const MissionKeysSelector = createSelector(selectMissions, (missions) =>
   Object.keys(missions).filter((key) => !missions[key].parent)
 );
 
-export const MissionSelector = (key: string) => (state: RootState) =>
-  state.missions[key];
+export const MissionSelector = (key: string) =>
+  createSelector(selectMissions, (missions) => missions[key]);
 export default MissionsSlice.reducer;

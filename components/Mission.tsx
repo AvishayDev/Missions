@@ -7,6 +7,7 @@ import {
   openMissionChildren,
   removeMission,
 } from "../redux/features/MissionsSlice";
+import { useEffect } from "react";
 
 interface MissionProps {
   id: string;
@@ -15,8 +16,9 @@ interface MissionProps {
 const Mission: React.FC<MissionProps> = ({ id }: MissionProps) => {
   const dispatch = useAppDispatch();
   const mission: MissionStoreType = useAppSelector(MissionSelector(id));
+
   return (
-    <>
+    <View>
       <View style={globalStyles.rowContainer}>
         <Button title="del" onPress={() => dispatch(removeMission(id))} />
         <Text>{mission.title}</Text>
@@ -28,7 +30,7 @@ const Mission: React.FC<MissionProps> = ({ id }: MissionProps) => {
         )}
       </View>
       {mission.open && mission.children.map((child) => <Mission id={child} />)}
-    </>
+    </View>
   );
 };
 
