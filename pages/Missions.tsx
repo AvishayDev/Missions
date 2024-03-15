@@ -14,7 +14,7 @@ const Missions: React.FC<MissionsProps> = ({
 }: MissionsProps) => {
   const missions = useAppSelector(MissionKeysSelector);
   return (
-    <View>
+    <View style={missionsStyles.container}>
       <Text>{route.params.title}</Text>
       <View
         style={[globalStyles.cardContainer, missionsStyles.missionContainer]}
