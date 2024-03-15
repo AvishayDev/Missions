@@ -1,14 +1,15 @@
-import { Button, Text, View } from "react-native";
+import { Button, FlatList, Text, TextInput, View } from "react-native";
 import { MissionStoreType } from "../types/Missions.types";
 import { globalStyles } from "../styles/globals.styles";
 import { useAppDispatch, useAppSelector } from "../redux/app/hooks";
 import {
   MissionSelector,
+  addMission,
+  editMissionTitle,
   openMissionChildren,
   removeMission,
 } from "../redux/features/MissionsSlice";
-import { useEffect } from "react";
-import { FlatList } from "react-native-gesture-handler";
+import { useEffect, useState } from "react";
 
 interface MissionProps {
   id: string;
@@ -22,7 +23,11 @@ const Mission: React.FC<MissionProps> = ({ id }: MissionProps) => {
     <View>
       <View style={globalStyles.rowContainer}>
         <Button title="del" onPress={() => dispatch(removeMission(id))} />
-        <Text>{mission.title}</Text>
+        <TextInput
+          value={mission.text}
+          onChangeText={(text) => dispatch(editMissionTitle({ id, text }))}
+          onSubmitEditing={() => dispatch(addMission({ sourceId: id }))}
+        />
         {mission.children.length > 0 && (
           <Button
             title="open"

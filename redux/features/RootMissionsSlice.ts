@@ -13,16 +13,14 @@ const initialState: RootMissionsSliceState = {
       missions: {
         1: {
           open: false,
-          index: 0,
           parent: null,
-          title: "111111",
+          text: "111111",
           children: ["2"],
         },
         2: {
           open: false,
-          index: 1,
           parent: "1",
-          title: "222222",
+          text: "222222",
           children: [],
         },
       },
@@ -33,9 +31,8 @@ const initialState: RootMissionsSliceState = {
       missions: {
         2: {
           open: false,
-          index: 0,
           parent: null,
-          title: "222222",
+          text: "222222",
           children: [],
         },
       },
@@ -46,9 +43,8 @@ const initialState: RootMissionsSliceState = {
       missions: {
         3: {
           open: false,
-          index: 0,
           parent: null,
-          title: "3333333",
+          text: "3333333",
           children: [],
         },
       },

@@ -1,6 +1,10 @@
 import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import { MissionStoreType } from "../../types/Missions.types";
 import { RootState } from "../app/store";
+import {
+  AddMissionPayload,
+  editMissionTitlePayload,
+} from "../../styles/StoreActionTypes/MissionsSlice.styles";
 
 type MissionsSliceState = Record<string, MissionStoreType>;
 
@@ -10,7 +14,6 @@ export const MissionsSlice = createSlice({
   name: "missions",
   initialState,
   reducers: {
-    addMission: (state, action: PayloadAction<string>) => {},
     setMissions: (state, action: PayloadAction<MissionsSliceState>) =>
       action.payload,
     openMissionChildren: (state, action: PayloadAction<string>) => {
@@ -26,11 +29,36 @@ export const MissionsSlice = createSlice({
       }
       delete state[action.payload];
     },
+    editMissionTitle: (
+      state,
+      action: PayloadAction<editMissionTitlePayload>
+    ) => {
+      const { id, text } = action.payload;
+      state[id].text = text;
+    },
+    addMission: (state, action: PayloadAction<AddMissionPayload>) => {
+      const id = Date.now.toString();
+      const { sourceId } = action.payload;
+      state[id] = {
+        text: "",
+        children: [],
+        open: false,
+        parent: state[sourceId].parent,
+      };
+
+      if (state[sourceId].parent)
+        state[state[sourceId].parent!].children.push(id);
+    },
   },
 });
 
-export const { addMission, setMissions, openMissionChildren, removeMission } =
-  MissionsSlice.actions;
+export const {
+  addMission,
+  setMissions,
+  openMissionChildren,
+  removeMission,
+  editMissionTitle,
+} = MissionsSlice.actions;
 
 const selectMissions = (state: RootState) => state.missions;
 export const MissionKeysSelector = createSelector(selectMissions, (missions) =>
