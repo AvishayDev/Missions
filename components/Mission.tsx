@@ -8,6 +8,7 @@ import {
   removeMission,
 } from "../redux/features/MissionsSlice";
 import { useEffect } from "react";
+import { FlatList } from "react-native-gesture-handler";
 
 interface MissionProps {
   id: string;
@@ -29,7 +30,13 @@ const Mission: React.FC<MissionProps> = ({ id }: MissionProps) => {
           />
         )}
       </View>
-      {mission.open && mission.children.map((child) => <Mission id={child} />)}
+      {mission.open && (
+        <FlatList
+          data={mission.children}
+          keyExtractor={(item) => item}
+          renderItem={({ item }) => <Mission id={item} />}
+        />
+      )}
     </View>
   );
 };
