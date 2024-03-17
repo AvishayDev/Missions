@@ -9,21 +9,23 @@ import {
   openMissionChildren,
   removeMission,
 } from "../redux/features/MissionsSlice";
-import { useEffect, useState } from "react";
 
 interface MissionProps {
   id: string;
+  nestLevel: number;
 }
 
-const Mission: React.FC<MissionProps> = ({ id }: MissionProps) => {
+const Mission: React.FC<MissionProps> = ({ id, nestLevel }: MissionProps) => {
   const dispatch = useAppDispatch();
   const mission: MissionStoreType = useAppSelector(MissionSelector(id));
 
   return (
     <View>
       <View style={globalStyles.rowContainer}>
+        <View style={{ width: nestLevel * 20 }} />
         <Button title="del" onPress={() => dispatch(removeMission(id))} />
         <TextInput
+          style={globalStyles.flex1}
           value={mission.text}
           onChangeText={(text) => dispatch(editMissionTitle({ id, text }))}
           onSubmitEditing={() => dispatch(addMission({ sourceId: id }))}
@@ -39,7 +41,9 @@ const Mission: React.FC<MissionProps> = ({ id }: MissionProps) => {
         <FlatList
           data={mission.children}
           keyExtractor={(item) => item}
-          renderItem={({ item }) => <Mission id={item} />}
+          renderItem={({ item }) => (
+            <Mission id={item} nestLevel={nestLevel + 1} />
+          )}
         />
       )}
     </View>

@@ -22,7 +22,7 @@ const Missions: React.FC<MissionsProps> = ({
         <FlatList
           data={missions}
           keyExtractor={(item) => item}
-          renderItem={({ item }) => <Mission id={item} />}
+          renderItem={({ item }) => <Mission id={item} nestLevel={0} />}
         />
       </View>
     </View>

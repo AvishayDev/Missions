@@ -37,7 +37,7 @@ export const MissionsSlice = createSlice({
       state[id].text = text;
     },
     addMission: (state, action: PayloadAction<AddMissionPayload>) => {
-      const id = Date.now.toString();
+      const id = Date.now().toString();
       const { sourceId } = action.payload;
       state[id] = {
         text: "",

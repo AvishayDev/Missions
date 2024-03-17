@@ -13,4 +13,7 @@ export const globalStyles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 5,
   },
+  flex1: {
+    flex: 1,
+  },
 });
