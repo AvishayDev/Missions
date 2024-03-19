@@ -6,8 +6,10 @@ import {
   MissionSelector,
   addMission,
   editMissionTitle,
+  focusedMissionSelector,
   openMissionChildren,
   removeMission,
+  setFocusedMission,
 } from "../redux/features/MissionsSlice";
 
 interface MissionProps {
@@ -23,19 +25,27 @@ const Mission: React.FC<MissionProps> = ({
 }: MissionProps) => {
   const dispatch = useAppDispatch();
   const mission: MissionStoreType = useAppSelector(MissionSelector(id));
+  const focusedMission = useAppSelector(focusedMissionSelector);
 
+  const handleTextInputBlur = () => {
+    dispatch(setFocusedMission(null));
+    if (mission.text === "") dispatch(removeMission(id));
+  };
   return (
     <View>
       <View style={globalStyles.rowContainer}>
         <View style={{ width: nestLevel * 20 }} />
         <Button title="del" onPress={() => dispatch(removeMission(id))} />
         <TextInput
+          onFocus={() => dispatch(setFocusedMission(id))}
+          onBlur={handleTextInputBlur}
           style={globalStyles.flex1}
           value={mission.text}
           onChangeText={(text) => dispatch(editMissionTitle({ id, text }))}
           onSubmitEditing={() =>
             dispatch(addMission({ sourceId: id, sourceIndex: index }))
           }
+          autoFocus={focusedMission === id}
         />
         {mission.children.length > 0 && (
           <Button
