@@ -11,9 +11,15 @@ const initialState: RootMissionsSliceState = {
     0: {
       key: "0",
       missions: {
-        1: {
+        root: {
           open: false,
           parent: null,
+          text: "root",
+          children: ["1"],
+        },
+        1: {
+          open: false,
+          parent: "root",
           text: "111111",
           children: ["2"],
         },
@@ -29,9 +35,15 @@ const initialState: RootMissionsSliceState = {
     1: {
       key: "1",
       missions: {
-        2: {
+        root: {
           open: false,
           parent: null,
+          text: "root",
+          children: ["2"],
+        },
+        2: {
+          open: false,
+          parent: "root",
           text: "222222",
           children: [],
         },
@@ -41,9 +53,15 @@ const initialState: RootMissionsSliceState = {
     2: {
       key: "2",
       missions: {
-        3: {
+        root: {
           open: false,
           parent: null,
+          text: "root",
+          children: ["3"],
+        },
+        3: {
+          open: false,
+          parent: "root",
           text: "3333333",
           children: [],
         },
@@ -61,7 +79,14 @@ export const RootMissionsSlice = createSlice({
       const key = Date.now().toString();
       state.rootMissions[key] = {
         key,
-        missions: {},
+        missions: {
+          root: {
+            open: false,
+            parent: null,
+            text: "root",
+            children: [],
+          },
+        },
         title: action.payload,
       };
     },

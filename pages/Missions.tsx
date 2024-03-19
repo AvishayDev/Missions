@@ -13,6 +13,7 @@ const Missions: React.FC<MissionsProps> = ({
   route,
 }: MissionsProps) => {
   const missions = useAppSelector(MissionKeysSelector);
+
   return (
     <View style={missionsStyles.container}>
       <Text>{route.params.title}</Text>
@@ -22,7 +23,9 @@ const Missions: React.FC<MissionsProps> = ({
         <FlatList
           data={missions}
           keyExtractor={(item) => item}
-          renderItem={({ item }) => <Mission id={item} nestLevel={0} />}
+          renderItem={({ item, index }) => (
+            <Mission id={item} nestLevel={0} index={index} />
+          )}
         />
       </View>
     </View>

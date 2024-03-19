@@ -12,10 +12,15 @@ import {
 
 interface MissionProps {
   id: string;
+  index: number;
   nestLevel: number;
 }
 
-const Mission: React.FC<MissionProps> = ({ id, nestLevel }: MissionProps) => {
+const Mission: React.FC<MissionProps> = ({
+  id,
+  nestLevel,
+  index,
+}: MissionProps) => {
   const dispatch = useAppDispatch();
   const mission: MissionStoreType = useAppSelector(MissionSelector(id));
 
@@ -28,7 +33,9 @@ const Mission: React.FC<MissionProps> = ({ id, nestLevel }: MissionProps) => {
           style={globalStyles.flex1}
           value={mission.text}
           onChangeText={(text) => dispatch(editMissionTitle({ id, text }))}
-          onSubmitEditing={() => dispatch(addMission({ sourceId: id }))}
+          onSubmitEditing={() =>
+            dispatch(addMission({ sourceId: id, sourceIndex: index }))
+          }
         />
         {mission.children.length > 0 && (
           <Button
@@ -41,8 +48,12 @@ const Mission: React.FC<MissionProps> = ({ id, nestLevel }: MissionProps) => {
         <FlatList
           data={mission.children}
           keyExtractor={(item) => item}
-          renderItem={({ item }) => (
-            <Mission id={item} nestLevel={nestLevel + 1} />
+          renderItem={({ item, index: childrenIndex }) => (
+            <Mission
+              id={item}
+              nestLevel={nestLevel + 1}
+              index={childrenIndex}
+            />
           )}
         />
       )}

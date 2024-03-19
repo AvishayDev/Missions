@@ -3,4 +3,7 @@ export type editMissionTitlePayload = {
   text: string;
 };
 
-export type AddMissionPayload = { sourceId: string };
+export type AddMissionPayload = {
+  sourceId: string;
+  sourceIndex: number;
+};
