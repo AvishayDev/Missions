@@ -21,12 +21,13 @@ export const MissionsSlice = createSlice({
     },
     removeMission: (state, action: PayloadAction<string>) => {
       const { parent } = state[action.payload];
-      if (parent! == "root") {
-        state[parent].children = state[parent].children.filter(
-          (child) => child !== action.payload
-        );
-        if (state[parent].children.length === 0) state[parent].open = false;
-      }
+      if (!parent) return;
+
+      state[parent].children = state[parent].children.filter(
+        (child) => child !== action.payload
+      );
+      if (state[parent].children.length === 0) state[parent].open = false;
+
       state[action.payload].children.forEach((child) => {
         delete state[child];
       });
