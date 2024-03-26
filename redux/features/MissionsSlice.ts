@@ -1,5 +1,8 @@
 import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
-import { MissionStoreType } from "../../types/Missions.types";
+import {
+  MissionDefaultValue,
+  MissionStoreType,
+} from "../../types/Missions.types";
 import { RootState } from "../app/store";
 import {
   AddMissionPayload,
@@ -57,9 +60,7 @@ export const MissionsSlice = createSlice({
       const id = Date.now().toString();
       const { sourceId } = action.payload;
       state.missions[id] = {
-        text: "",
-        children: [],
-        open: false,
+        ...MissionDefaultValue,
         parent: state.missions[sourceId].parent,
       };
       const { sourceIndex } = action.payload;

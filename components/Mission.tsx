@@ -11,6 +11,7 @@ import {
   removeMission,
   setFocusedMission,
 } from "../redux/features/MissionsSlice";
+import { missionsStyles } from "../styles/Missions.styles";
 
 interface MissionProps {
   id: string;

@@ -12,6 +12,7 @@ export const globalStyles = StyleSheet.create({
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.25,
     shadowRadius: 5,
+    padding: 10,
   },
   flex1: {
     flex: 1,

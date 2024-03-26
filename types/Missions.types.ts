@@ -10,3 +10,10 @@ export type MissionStoreType = {
   text: string;
   children: string[];
 };
+
+export const MissionDefaultValue: MissionStoreType = {
+  open: false,
+  parent: null,
+  text: "",
+  children: [],
+} as const;
