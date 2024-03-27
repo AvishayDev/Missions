@@ -12,6 +12,12 @@ import {
   setFocusedMission,
 } from "../redux/features/MissionsSlice";
 import { missionsStyles } from "../styles/Missions.styles";
+import {
+  Directions,
+  Gesture,
+  GestureDetector,
+} from "react-native-gesture-handler";
+import { getFlingGesture } from "../gestures/Flings";
 
 interface MissionProps {
   id: string;
@@ -28,47 +34,54 @@ const Mission: React.FC<MissionProps> = ({
   const mission: MissionStoreType = useAppSelector(MissionSelector(id));
   const focusedMission = useAppSelector(focusedMissionSelector);
 
+  const rightFling = getFlingGesture(Directions.RIGHT).onStart(() =>
+    console.log("right-fling")
+  );
+
   const handleTextInputBlur = () => {
     dispatch(setFocusedMission(null));
     if (mission.text === "") dispatch(removeMission(id));
   };
+
   return (
-    <View>
-      <View style={globalStyles.rowContainer}>
-        <View style={{ width: nestLevel * 20 }} />
-        <Button title="del" onPress={() => dispatch(removeMission(id))} />
-        <TextInput
-          onFocus={() => dispatch(setFocusedMission(id))}
-          onBlur={handleTextInputBlur}
-          style={globalStyles.flex1}
-          value={mission.text}
-          onChangeText={(text) => dispatch(editMissionTitle({ id, text }))}
-          onSubmitEditing={() =>
-            dispatch(addMission({ sourceId: id, sourceIndex: index }))
-          }
-          autoFocus={focusedMission === id}
-        />
-        {mission.children.length > 0 && (
-          <Button
-            title="open"
-            onPress={() => dispatch(openMissionChildren(id))}
+    <GestureDetector gesture={rightFling}>
+      <View>
+        <View style={globalStyles.rowContainer}>
+          <View style={{ width: nestLevel * 20 }} />
+          <Button title="del" onPress={() => dispatch(removeMission(id))} />
+          <TextInput
+            onFocus={() => dispatch(setFocusedMission(id))}
+            onBlur={handleTextInputBlur}
+            style={globalStyles.flex1}
+            value={mission.text}
+            onChangeText={(text) => dispatch(editMissionTitle({ id, text }))}
+            onSubmitEditing={() =>
+              dispatch(addMission({ sourceId: id, sourceIndex: index }))
+            }
+            autoFocus={focusedMission === id}
+          />
+          {mission.children.length > 0 && (
+            <Button
+              title="open"
+              onPress={() => dispatch(openMissionChildren(id))}
+            />
+          )}
+        </View>
+        {mission.open && (
+          <FlatList
+            data={mission.children}
+            keyExtractor={(item) => item}
+            renderItem={({ item, index: childrenIndex }) => (
+              <Mission
+                id={item}
+                nestLevel={nestLevel + 1}
+                index={childrenIndex}
+              />
+            )}
           />
         )}
       </View>
-      {mission.open && (
-        <FlatList
-          data={mission.children}
-          keyExtractor={(item) => item}
-          renderItem={({ item, index: childrenIndex }) => (
-            <Mission
-              id={item}
-              nestLevel={nestLevel + 1}
-              index={childrenIndex}
-            />
-          )}
-        />
-      )}
-    </View>
+    </GestureDetector>
   );
 };
 

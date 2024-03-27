@@ -1,7 +1,17 @@
-import { Text, View, FlatList } from "react-native";
+import {
+  Text,
+  View,
+  FlatList,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { HomeStackNavigatorMissionsProps } from "../types/routes.types";
-import { useAppSelector } from "../redux/app/hooks";
-import { MissionKeysSelector } from "../redux/features/MissionsSlice";
+import { useAppDispatch, useAppSelector } from "../redux/app/hooks";
+import {
+  addMission,
+  focusedMissionSelector,
+  MissionKeysSelector,
+} from "../redux/features/MissionsSlice";
 import { globalStyles } from "../styles/globals.styles";
 import Mission from "../components/Mission";
 import { missionsStyles } from "../styles/Missions.styles";
@@ -12,7 +22,9 @@ const Missions: React.FC<MissionsProps> = ({
   navigation,
   route,
 }: MissionsProps) => {
+  const dispatch = useAppDispatch();
   const missions = useAppSelector(MissionKeysSelector);
+  const focusedMission = useAppSelector(focusedMissionSelector);
 
   return (
     <View style={globalStyles.flex1}>
@@ -26,7 +38,20 @@ const Missions: React.FC<MissionsProps> = ({
             <Mission id={item} nestLevel={0} index={index} />
           )}
         />
-        <View style={globalStyles.flex1}></View>
+        <TouchableWithoutFeedback
+          onPress={() =>
+            focusedMission
+              ? Keyboard.dismiss()
+              : dispatch(
+                  addMission({
+                    sourceId: missions[missions.length - 1],
+                    sourceIndex: missions.length - 1,
+                  })
+                )
+          }
+        >
+          <View style={globalStyles.flex1}></View>
+        </TouchableWithoutFeedback>
       </View>
     </View>
   );

@@ -39,7 +39,7 @@ const Home: React.FC<HomeProps> = ({ navigation, route }: HomeProps) => {
         />
         <View style={globalStyles.rowContainer}>
           <TextInput
-            style={homeStyles.addTextInput}
+            style={[homeStyles.addTextInput, globalStyles.flex1]}
             value={newMissionText}
             onChangeText={setNewMissionText}
           />
