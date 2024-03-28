@@ -5,9 +5,10 @@ import {
 } from "../../types/Missions.types";
 import { RootState } from "../app/store";
 import {
-  AddMissionPayload,
+  SourceMissionPayload,
   editMissionTitlePayload,
 } from "../../styles/StoreActionTypes/MissionsSlice.styles";
+import { recursiveDeleteMission } from "../../utils/redux/MissionsSlice.utils";
 
 type MissionsSliceState = {
   missions: Record<string, MissionStoreType>;
@@ -34,20 +35,15 @@ export const MissionsSlice = createSlice({
       state.missions[action.payload].open =
         !state.missions[action.payload].open;
     },
-    removeMission: (state, action: PayloadAction<string>) => {
-      const { parent } = state.missions[action.payload];
+    removeMission: (state, action: PayloadAction<SourceMissionPayload>) => {
+      const { parent } = state.missions[action.payload.id];
       if (!parent) return;
 
-      state.missions[parent].children = state.missions[parent].children.filter(
-        (child) => child !== action.payload
-      );
+      state.missions[parent].children.splice(action.payload.index, 1);
       if (state.missions[parent].children.length === 0)
         state.missions[parent].open = false;
 
-      state.missions[action.payload].children.forEach((child) => {
-        delete state.missions[child];
-      });
-      delete state.missions[action.payload];
+      recursiveDeleteMission(state.missions, action.payload.id);
     },
     editMissionTitle: (
       state,
@@ -56,20 +52,39 @@ export const MissionsSlice = createSlice({
       const { id, text } = action.payload;
       state.missions[id].text = text;
     },
-    addMission: (state, action: PayloadAction<AddMissionPayload>) => {
+    addMission: (state, action: PayloadAction<SourceMissionPayload>) => {
       const id = Date.now().toString();
-      const { sourceId } = action.payload;
+      const { id: sourceId } = action.payload;
       state.missions[id] = {
         ...MissionDefaultValue,
         parent: state.missions[sourceId].parent,
       };
-      const { sourceIndex } = action.payload;
+      const { index: sourceIndex } = action.payload;
       state.missions[state.missions[sourceId].parent!].children.splice(
         sourceIndex + 1,
         0,
         id
       );
       state.focusedMission = id;
+    },
+    convertToChild: (state, action: PayloadAction<SourceMissionPayload>) => {
+      if (action.payload.index === 0) return;
+
+      state.missions[state.missions[action.payload.id].parent!].children.splice(
+        action.payload.index,
+        1
+      );
+
+      state.missions[action.payload.id].parent =
+        state.missions[state.missions[action.payload.id].parent!].children[
+          action.payload.index - 1
+        ];
+
+      state.missions[
+        state.missions[state.missions[action.payload.id].parent!].children[
+          action.payload.index - 1
+        ]
+      ].children.push(action.payload.id);
     },
   },
 });
@@ -81,6 +96,7 @@ export const {
   openMissionChildren,
   removeMission,
   editMissionTitle,
+  convertToChild,
 } = MissionsSlice.actions;
 
 const selectMissions = (state: RootState) => state.missions;

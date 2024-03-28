@@ -1,23 +1,23 @@
 import { Button, FlatList, Text, TextInput, View } from "react-native";
-import { MissionStoreType } from "../types/Missions.types";
-import { globalStyles } from "../styles/globals.styles";
-import { useAppDispatch, useAppSelector } from "../redux/app/hooks";
+import { MissionStoreType } from "../../types/Missions.types";
+import { globalStyles } from "../../styles/globals.styles";
+import { useAppDispatch, useAppSelector } from "../../redux/app/hooks";
 import {
   MissionSelector,
   addMission,
+  convertToChild,
   editMissionTitle,
   focusedMissionSelector,
   openMissionChildren,
   removeMission,
   setFocusedMission,
-} from "../redux/features/MissionsSlice";
-import { missionsStyles } from "../styles/Missions.styles";
+} from "../../redux/features/MissionsSlice";
 import {
   Directions,
   Gesture,
   GestureDetector,
 } from "react-native-gesture-handler";
-import { getFlingGesture } from "../gestures/Flings";
+import { useMissionGestures } from "./Mission.gestures";
 
 interface MissionProps {
   id: string;
@@ -34,30 +34,39 @@ const Mission: React.FC<MissionProps> = ({
   const mission: MissionStoreType = useAppSelector(MissionSelector(id));
   const focusedMission = useAppSelector(focusedMissionSelector);
 
-  const rightFling = getFlingGesture(Directions.RIGHT).onStart(() =>
-    console.log("right-fling")
-  );
+  const rightFling = Gesture.Fling()
+    .enabled(index > 0)
+    .direction(Directions.RIGHT)
+    .onStart(() => dispatch(convertToChild({ id, index })));
+
+  const leftFling = Gesture.Fling()
+    .enabled(nestLevel > 0)
+    .direction(Directions.LEFT)
+    .onStart(() => console.log("fling left"));
+
+  const gestures = Gesture.Simultaneous(rightFling, leftFling);
 
   const handleTextInputBlur = () => {
     dispatch(setFocusedMission(null));
-    if (mission.text === "") dispatch(removeMission(id));
+    if (mission.text === "") dispatch(removeMission({ id, index }));
   };
 
   return (
-    <GestureDetector gesture={rightFling}>
+    <GestureDetector gesture={gestures}>
       <View>
         <View style={globalStyles.rowContainer}>
           <View style={{ width: nestLevel * 20 }} />
-          <Button title="del" onPress={() => dispatch(removeMission(id))} />
+          <Button
+            title="del"
+            onPress={() => dispatch(removeMission({ id, index }))}
+          />
           <TextInput
             onFocus={() => dispatch(setFocusedMission(id))}
             onBlur={handleTextInputBlur}
             style={globalStyles.flex1}
             value={mission.text}
             onChangeText={(text) => dispatch(editMissionTitle({ id, text }))}
-            onSubmitEditing={() =>
-              dispatch(addMission({ sourceId: id, sourceIndex: index }))
-            }
+            onSubmitEditing={() => dispatch(addMission({ id, index }))}
             autoFocus={focusedMission === id}
           />
           {mission.children.length > 0 && (

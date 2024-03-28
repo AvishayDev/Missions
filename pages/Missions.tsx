@@ -13,7 +13,7 @@ import {
   MissionKeysSelector,
 } from "../redux/features/MissionsSlice";
 import { globalStyles } from "../styles/globals.styles";
-import Mission from "../components/Mission";
+import Mission from "../components/Mission/Mission";
 import { missionsStyles } from "../styles/Missions.styles";
 
 interface MissionsProps extends HomeStackNavigatorMissionsProps {}
@@ -44,8 +44,8 @@ const Missions: React.FC<MissionsProps> = ({
               ? Keyboard.dismiss()
               : dispatch(
                   addMission({
-                    sourceId: missions[missions.length - 1],
-                    sourceIndex: missions.length - 1,
+                    id: missions[missions.length - 1],
+                    index: missions.length - 1,
                   })
                 )
           }
