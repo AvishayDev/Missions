@@ -39,9 +39,9 @@ export const MissionsSlice = createSlice({
       const { parent } = state.missions[action.payload.id];
       if (!parent) return;
 
-      state.missions[parent].children.splice(action.payload.index, 1);
-      if (state.missions[parent].children.length === 0)
-        state.missions[parent].open = false;
+      state.missions[parent].children = state.missions[parent].children.filter(
+        (child) => child !== action.payload.id
+      );
 
       recursiveDeleteMission(state.missions, action.payload.id);
     },
@@ -55,37 +55,16 @@ export const MissionsSlice = createSlice({
     addMission: (state, action: PayloadAction<SourceMissionPayload>) => {
       const id = Date.now().toString();
       const { id: sourceId } = action.payload;
+      const parent = state.missions[sourceId]?.parent || "root";
       state.missions[id] = {
         ...MissionDefaultValue,
-        parent: state.missions[sourceId].parent,
+        parent,
       };
       const { index: sourceIndex } = action.payload;
-      state.missions[state.missions[sourceId].parent!].children.splice(
-        sourceIndex + 1,
-        0,
-        id
-      );
+      state.missions[parent].children.splice(sourceIndex + 1, 0, id);
       state.focusedMission = id;
     },
-    convertToChild: (state, action: PayloadAction<SourceMissionPayload>) => {
-      if (action.payload.index === 0) return;
-
-      state.missions[state.missions[action.payload.id].parent!].children.splice(
-        action.payload.index,
-        1
-      );
-
-      state.missions[action.payload.id].parent =
-        state.missions[state.missions[action.payload.id].parent!].children[
-          action.payload.index - 1
-        ];
-
-      state.missions[
-        state.missions[state.missions[action.payload.id].parent!].children[
-          action.payload.index - 1
-        ]
-      ].children.push(action.payload.id);
-    },
+    convertToChild: (state, action: PayloadAction<SourceMissionPayload>) => {},
   },
 });
 

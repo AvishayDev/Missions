@@ -45,7 +45,7 @@ const Missions: React.FC<MissionsProps> = ({
               : dispatch(
                   addMission({
                     id: missions[missions.length - 1],
-                    index: missions.length - 1,
+                    index: missions.length && missions.length - 1,
                   })
                 )
           }

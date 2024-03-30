@@ -1,4 +1,12 @@
-import { Button, FlatList, Text, TextInput, View } from "react-native";
+import {
+  Button,
+  FlatList,
+  NativeSyntheticEvent,
+  Text,
+  TextInput,
+  TextInputFocusEventData,
+  View,
+} from "react-native";
 import { MissionStoreType } from "../../types/Missions.types";
 import { globalStyles } from "../../styles/globals.styles";
 import { useAppDispatch, useAppSelector } from "../../redux/app/hooks";
@@ -17,7 +25,7 @@ import {
   Gesture,
   GestureDetector,
 } from "react-native-gesture-handler";
-import { useMissionGestures } from "./Mission.gestures";
+import { runOnUI } from "react-native-reanimated";
 
 interface MissionProps {
   id: string;
@@ -37,7 +45,9 @@ const Mission: React.FC<MissionProps> = ({
   const rightFling = Gesture.Fling()
     .enabled(index > 0)
     .direction(Directions.RIGHT)
-    .onStart(() => dispatch(convertToChild({ id, index })));
+    .onStart(() => {
+      dispatch(convertToChild({ id, index }));
+    });
 
   const leftFling = Gesture.Fling()
     .enabled(nestLevel > 0)
@@ -76,7 +86,7 @@ const Mission: React.FC<MissionProps> = ({
             />
           )}
         </View>
-        {mission.open && (
+        {mission.open && mission.children.length > 0 && (
           <FlatList
             data={mission.children}
             keyExtractor={(item) => item}

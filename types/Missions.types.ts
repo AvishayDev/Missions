@@ -12,7 +12,7 @@ export type MissionStoreType = {
 };
 
 export const MissionDefaultValue: MissionStoreType = {
-  open: false,
+  open: true,
   parent: null,
   text: "",
   children: [],
