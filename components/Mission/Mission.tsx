@@ -25,7 +25,6 @@ import {
   Gesture,
   GestureDetector,
 } from "react-native-gesture-handler";
-import { runOnUI } from "react-native-reanimated";
 
 interface MissionProps {
   id: string;
@@ -46,7 +45,7 @@ const Mission: React.FC<MissionProps> = ({
     .enabled(index > 0)
     .direction(Directions.RIGHT)
     .onStart(() => {
-      dispatch(convertToChild({ id, index }));
+      console.log("fling right");
     });
 
   const leftFling = Gesture.Fling()
