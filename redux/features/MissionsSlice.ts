@@ -65,7 +65,9 @@ export const MissionsSlice = createSlice({
       state.focusedMission = id;
     },
     convertToChild: (state, action: PayloadAction<SourceMissionPayload>) => {
-      console.log("koko");
+      console.log(state.missions);
+
+      const { id, index } = action.payload;
     },
   },
 });
