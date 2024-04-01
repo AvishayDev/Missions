@@ -7,10 +7,10 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Provider store={store}>
         <AppNavigator />
-      </GestureHandlerRootView>
-    </Provider>
+      </Provider>
+    </GestureHandlerRootView>
   );
 }

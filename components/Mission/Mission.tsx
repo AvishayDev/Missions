@@ -45,7 +45,7 @@ const Mission: React.FC<MissionProps> = ({
     .enabled(index > 0)
     .direction(Directions.RIGHT)
     .onStart(() => {
-      console.log("fling right");
+      dispatch(convertToChild({ id, index }));
     });
 
   const leftFling = Gesture.Fling()
