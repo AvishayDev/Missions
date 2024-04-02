@@ -1,4 +1,4 @@
-import { MissionStoreType } from "../../types/Missions.types";
+import { MissionStoreType } from "../../../types/Missions.types";
 
 export const recursiveDeleteMission = (
   missions: Record<string, MissionStoreType>,

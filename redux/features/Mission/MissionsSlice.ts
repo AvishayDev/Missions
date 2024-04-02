@@ -2,13 +2,13 @@ import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import {
   MissionDefaultValue,
   MissionStoreType,
-} from "../../types/Missions.types";
-import { RootState } from "../app/store";
+} from "../../../types/Missions.types";
+import { RootState } from "../../app/store";
 import {
   SourceMissionPayload,
   editMissionTitlePayload,
-} from "../../styles/StoreActionTypes/MissionsSlice.styles";
-import { recursiveDeleteMission } from "../../utils/redux/MissionsSlice.utils";
+} from "./MissionsSlice.types";
+import { recursiveDeleteMission } from "./MissionsSlice.utils";
 
 type MissionsSliceState = {
   missions: Record<string, MissionStoreType>;

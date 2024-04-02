@@ -1,16 +1,16 @@
 import { Button, FlatList, Text, TextInput, View } from "react-native";
-import { HomeStackNavigatorHomeProps } from "../types/routes.types";
-import { WELCOME_MESSAGES } from "../constants/messages.consts";
-import { getRandomElement } from "../utils/functions/globalFunctions";
-import { homeStyles } from "../styles/Home.styles";
+import { HomeStackNavigatorHomeProps } from "../../types/routes.types";
+import { WELCOME_MESSAGES } from "../../constants/messages.consts";
+import { getRandomElement } from "../../utils/functions/globalFunctions";
+import { homeStyles } from "./Home.styles";
 import { useMemo, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../redux/app/hooks";
-import RootMission from "../components/RootMission";
+import { useAppDispatch, useAppSelector } from "../../redux/app/hooks";
+import RootMission from "../../components/RootMission";
 import {
   RootMissionsSelector,
   addRootMission,
-} from "../redux/features/RootMissionsSlice";
-import { globalStyles } from "../styles/globals.styles";
+} from "../../redux/features/RootMissionsSlice";
+import { globalStyles } from "../../styles/globals.styles";
 
 interface HomeProps extends HomeStackNavigatorHomeProps {}
 

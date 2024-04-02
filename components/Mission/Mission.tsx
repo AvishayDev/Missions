@@ -19,13 +19,14 @@ import {
   openMissionChildren,
   removeMission,
   setFocusedMission,
-} from "../../redux/features/MissionsSlice";
+} from "../../redux/features/Mission/MissionsSlice";
 import {
   Directions,
   Gesture,
   GestureDetector,
 } from "react-native-gesture-handler";
-import { runOnJS } from "react-native-reanimated";
+import { runOnJS, runOnUI } from "react-native-reanimated";
+import { runWithWorklet } from "../../utils/functions/globalFunctions";
 
 interface MissionProps {
   id: string;
@@ -45,11 +46,7 @@ const Mission: React.FC<MissionProps> = ({
   const rightFling = Gesture.Fling()
     .enabled(index > 0)
     .direction(Directions.RIGHT)
-    .onStart(
-      runOnJS(() => {
-        dispatch(convertToChild({ id, index }));
-      })
-    );
+    .onStart(runOnJS(() => dispatch(convertToChild({ id, index }))));
 
   const leftFling = Gesture.Fling()
     .enabled(nestLevel > 0)

@@ -5,16 +5,16 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { HomeStackNavigatorMissionsProps } from "../types/routes.types";
-import { useAppDispatch, useAppSelector } from "../redux/app/hooks";
+import { HomeStackNavigatorMissionsProps } from "../../types/routes.types";
+import { useAppDispatch, useAppSelector } from "../../redux/app/hooks";
 import {
   addMission,
   focusedMissionSelector,
   MissionKeysSelector,
-} from "../redux/features/MissionsSlice";
-import { globalStyles } from "../styles/globals.styles";
-import Mission from "../components/Mission/Mission";
-import { missionsStyles } from "../styles/Missions.styles";
+} from "../../redux/features/Mission/MissionsSlice";
+import { globalStyles } from "../../styles/globals.styles";
+import Mission from "../../components/Mission/Mission";
+import { missionsStyles } from "./Missions.styles";
 
 interface MissionsProps extends HomeStackNavigatorMissionsProps {}
 
