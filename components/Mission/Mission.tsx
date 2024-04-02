@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/app/hooks";
 import {
   MissionSelector,
   addMission,
+  convertToBrother,
   convertToChild,
   editMissionTitle,
   focusedMissionSelector,
@@ -51,7 +52,7 @@ const Mission: React.FC<MissionProps> = ({
   const leftFling = Gesture.Fling()
     .enabled(nestLevel > 0)
     .direction(Directions.LEFT)
-    .onStart(() => console.log("fling left"));
+    .onStart(runOnJS(() => dispatch(convertToBrother({ id, index }))));
 
   const gestures = Gesture.Simultaneous(rightFling, leftFling);
 

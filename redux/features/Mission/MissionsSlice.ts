@@ -68,6 +68,38 @@ export const MissionsSlice = createSlice({
       console.log(state.missions);
 
       const { id, index } = action.payload;
+
+      const { parent: oldParent } = state.missions[id];
+      const newParent = state.missions[oldParent!].children[index - 1];
+
+      state.missions[oldParent!].children = state.missions[
+        oldParent!
+      ].children.filter((child) => child !== id);
+      state.missions[id].parent = newParent;
+      state.missions[newParent!].children.push(id);
+      state.missions[newParent!].open = true;
+    },
+    convertToBrother: (state, action: PayloadAction<SourceMissionPayload>) => {
+      const { id, index } = action.payload;
+      const { parent: oldParent } = state.missions[id];
+      const { parent: newParent } = state.missions[oldParent!];
+
+      state.missions[oldParent!].children = state.missions[
+        oldParent!
+      ].children.filter((child) => child !== id);
+      state.missions[id].parent = newParent;
+      state.missions[newParent!].open = true;
+
+      const oldParentIndex = state.missions[newParent!].children.findIndex(
+        (child) => child === oldParent
+      );
+      const insertIndex =
+        state.missions[oldParent!].children.length &&
+        index <= Math.floor(state.missions[oldParent!].children.length / 2)
+          ? oldParentIndex
+          : oldParentIndex + 1;
+
+      state.missions[newParent!].children.splice(insertIndex, 0, id);
     },
   },
 });
@@ -80,6 +112,7 @@ export const {
   removeMission,
   editMissionTitle,
   convertToChild,
+  convertToBrother,
 } = MissionsSlice.actions;
 
 const selectMissions = (state: RootState) => state.missions;
