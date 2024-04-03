@@ -8,7 +8,10 @@ const Stack = createNativeStackNavigator<HomeStackParamsList>();
 
 const HomeStackNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName={ROUTES.HOME_STACK.Main}>
+    <Stack.Navigator
+      initialRouteName={ROUTES.HOME_STACK.Main}
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen name={ROUTES.HOME_STACK.Main} component={Home} />
       <Stack.Screen
         name={ROUTES.HOME_STACK.Missions}

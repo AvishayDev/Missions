@@ -9,7 +9,7 @@ import RootMission from "../../components/RootMission";
 import {
   RootMissionsSelector,
   addRootMission,
-} from "../../redux/features/RootMissionsSlice";
+} from "../../redux/features/RootMissions/RootMissionsSlice";
 import { globalStyles } from "../../styles/globals.styles";
 
 interface HomeProps extends HomeStackNavigatorHomeProps {}

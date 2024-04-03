@@ -11,10 +11,13 @@ import {
   addMission,
   focusedMissionSelector,
   MissionKeysSelector,
+  MissionsSelector,
 } from "../../redux/features/Mission/MissionsSlice";
 import { globalStyles } from "../../styles/globals.styles";
 import Mission from "../../components/Mission/Mission";
 import { missionsStyles } from "./Missions.styles";
+import { AntDesign } from "@expo/vector-icons";
+import { setRootMissionMissions } from "../../redux/features/RootMissions/RootMissionsSlice";
 
 interface MissionsProps extends HomeStackNavigatorMissionsProps {}
 
@@ -24,11 +27,27 @@ const Missions: React.FC<MissionsProps> = ({
 }: MissionsProps) => {
   const dispatch = useAppDispatch();
   const missions = useAppSelector(MissionKeysSelector);
+  const allMissions = useAppSelector(MissionsSelector);
   const focusedMission = useAppSelector(focusedMissionSelector);
+
+  const handleBackPress = () => {
+    dispatch(
+      setRootMissionMissions({ key: route.params.key, missions: allMissions })
+    );
+    navigation.goBack();
+  };
 
   return (
     <View style={globalStyles.flex1}>
-      <Text>{route.params.title}</Text>
+      <View style={missionsStyles.headerContainer}>
+        <AntDesign
+          name="left"
+          size={30}
+          color="black"
+          onPress={handleBackPress}
+        />
+        <Text style={missionsStyles.pageTitle}>{route.params.title}</Text>
+      </View>
       <View style={[globalStyles.cardContainer, globalStyles.flex1]}>
         <FlatList
           style={missionsStyles.flatList}

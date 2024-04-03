@@ -125,4 +125,5 @@ export const MissionSelector = (key: string) =>
 export const focusedMissionSelector = (state: RootState) =>
   state.missions.focusedMission;
 
+export const MissionsSelector = (state: RootState) => state.missions.missions;
 export default MissionsSlice.reducer;

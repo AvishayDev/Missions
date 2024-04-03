@@ -5,7 +5,7 @@ import { setMissions } from "../redux/features/Mission/MissionsSlice";
 import { ROUTES } from "../constants/routes";
 import { RootMissionStoreType } from "../types/Missions.types";
 import { globalStyles } from "../styles/globals.styles";
-import { removeRootMission } from "../redux/features/RootMissionsSlice";
+import { removeRootMission } from "../redux/features/RootMissions/RootMissionsSlice";
 
 interface RootMissionProps extends HomeStackNavigatorHomeProps {
   data: RootMissionStoreType;
@@ -16,11 +16,11 @@ const RootMission: React.FC<RootMissionProps> = ({
   navigation,
 }: RootMissionProps) => {
   const dispatch = useAppDispatch();
-  const { title, missions } = data;
+  const { title, missions, key } = data;
 
   const handlePress = () => {
     dispatch(setMissions(missions));
-    navigation.navigate(ROUTES.HOME_STACK.Missions, { title });
+    navigation.navigate(ROUTES.HOME_STACK.Missions, { title, key });
   };
 
   return (

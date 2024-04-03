@@ -2,8 +2,10 @@ import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import {
   MissionDefaultValue,
   RootMissionStoreType,
-} from "../../types/Missions.types";
-import { RootState } from "../app/store";
+} from "../../../types/Missions.types";
+import { RootState } from "../../app/store";
+import { setMissions } from "../Mission/MissionsSlice";
+import { setMissionsPayload } from "./RootMissionsSlice.types";
 
 type RootMissionsSliceState = {
   rootMissions: Record<string, RootMissionStoreType>;
@@ -97,10 +99,17 @@ export const RootMissionsSlice = createSlice({
     removeRootMission: (state, action: PayloadAction<string>) => {
       delete state.rootMissions[action.payload];
     },
+    setRootMissionMissions: (
+      state,
+      action: PayloadAction<setMissionsPayload>
+    ) => {
+      state.rootMissions[action.payload.key].missions = action.payload.missions;
+    },
   },
 });
 
-export const { addRootMission, removeRootMission } = RootMissionsSlice.actions;
+export const { addRootMission, removeRootMission, setRootMissionMissions } =
+  RootMissionsSlice.actions;
 
 const selectRootMissions = (state: RootState) =>
   state.rootMissions.rootMissions;

@@ -2,7 +2,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 export type HomeStackParamsList = {
   Main: undefined;
-  Missions: { title?: string };
+  Missions: { title: string; key: string };
 };
 
 export type HomeStackNavigatorHomeProps = NativeStackScreenProps<
