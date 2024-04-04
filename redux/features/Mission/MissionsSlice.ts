@@ -9,6 +9,7 @@ import {
   editMissionTitlePayload,
 } from "./MissionsSlice.types";
 import { recursiveDeleteMission } from "./MissionsSlice.utils";
+import { testAction } from "../Global/GlobalActions";
 
 type MissionsSliceState = {
   missions: Record<string, MissionStoreType>;
@@ -101,6 +102,9 @@ export const MissionsSlice = createSlice({
 
       state.missions[newParent!].children.splice(insertIndex, 0, id);
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(testAction.fulfilled, (state, action) => {});
   },
 });
 
