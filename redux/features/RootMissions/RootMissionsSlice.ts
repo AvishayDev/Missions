@@ -85,7 +85,7 @@ const initialState: RootMissionsSliceState = {
 };
 
 export const RootMissionsSlice = createSlice({
-  name: "rootMissions",
+  name: SlicesNames.rootMissions,
   initialState,
   reducers: {
     addRootMission: (state, action: PayloadAction<string>) => {

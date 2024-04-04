@@ -22,7 +22,7 @@ const initialState: MissionsSliceState = {
 };
 
 export const MissionsSlice = createSlice({
-  name: "missions",
+  name: SlicesNames.missions,
   initialState,
   reducers: {
     setMissions: (
