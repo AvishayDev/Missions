@@ -42,7 +42,6 @@ const Mission: React.FC<MissionProps> = ({
 }: MissionProps) => {
   const dispatch = useAppDispatch();
   const mission: MissionStoreType = useAppSelector(MissionSelector(id));
-  const focusedMission = useAppSelector(focusedMissionSelector);
 
   const rightFling = Gesture.Fling()
     .enabled(index > 0)
@@ -76,8 +75,10 @@ const Mission: React.FC<MissionProps> = ({
             style={globalStyles.flex1}
             value={mission.text}
             onChangeText={(text) => dispatch(editMissionTitle({ id, text }))}
-            onSubmitEditing={() => dispatch(addMission({ id, index }))}
-            autoFocus={focusedMission === id}
+            onSubmitEditing={() =>
+              mission.text && dispatch(addMission({ id, index }))
+            }
+            autoFocus={!mission.text}
           />
           {mission.children.length > 0 && (
             <Button
