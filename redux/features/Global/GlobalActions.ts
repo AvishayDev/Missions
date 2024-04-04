@@ -1,10 +1,25 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { store } from "../../app/store";
+import { RootState, store } from "../../app/store";
+import { SlicesNames } from "../../app/Slices.types";
 
-export const testAction = createAsyncThunk(
-  "test/1",
-  async (_: void, thunkAPI) => {
-    const state = store.getState();
-    return state;
+const createGlobalAction = <T, R>(
+  sliceName: keyof typeof SlicesNames,
+  actionName: string,
+  action: (state: RootState, actionPayload: T) => R
+) => {
+  return createAsyncThunk(
+    `${sliceName}/${actionName}`,
+    (actionPayload: T, thunkAPI) => {
+      const state = store.getState();
+      return action(state, actionPayload);
+    }
+  );
+};
+
+export const getMissionsAction = createGlobalAction(
+  SlicesNames.rootMissions,
+  "getMissionsAction",
+  (state, actionPayload: string) => {
+    return { missions: state.missions.missions, key: actionPayload };
   }
 );

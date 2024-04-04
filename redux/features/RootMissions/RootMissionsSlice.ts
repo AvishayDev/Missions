@@ -6,6 +6,8 @@ import {
 import { RootState } from "../../app/store";
 import { setMissions } from "../Mission/MissionsSlice";
 import { setMissionsPayload } from "./RootMissionsSlice.types";
+import { SlicesNames } from "../../app/Slices.types";
+import { getMissionsAction } from "../Global/GlobalActions";
 
 type RootMissionsSliceState = {
   rootMissions: Record<string, RootMissionStoreType>;
@@ -106,6 +108,12 @@ export const RootMissionsSlice = createSlice({
       state.rootMissions[action.payload.key].missions = action.payload.missions;
     },
   },
+  // extraReducers: (builder) => {
+  //   builder.addCase(getMissionsAction.fulfilled, (state, action) => {
+  //     const { missions, key } = action.payload;
+  //     state.rootMissions[key!].missions = missions;
+  //   });
+  // },
 });
 
 export const { addRootMission, removeRootMission, setRootMissionMissions } =

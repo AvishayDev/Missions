@@ -61,8 +61,8 @@ const Mission: React.FC<MissionProps> = ({
   };
 
   return (
-    <GestureDetector gesture={gestures}>
-      <View>
+    <View>
+      <GestureDetector gesture={gestures}>
         <View style={globalStyles.rowContainer}>
           <View style={{ width: nestLevel * 20 }} />
           <Button
@@ -80,6 +80,7 @@ const Mission: React.FC<MissionProps> = ({
             }
             autoFocus={!mission.text}
           />
+
           {mission.children.length > 0 && (
             <Button
               title="open"
@@ -87,21 +88,21 @@ const Mission: React.FC<MissionProps> = ({
             />
           )}
         </View>
-        {mission.open && mission.children.length > 0 && (
-          <FlatList
-            data={mission.children}
-            keyExtractor={(item) => item}
-            renderItem={({ item, index: childrenIndex }) => (
-              <Mission
-                id={item}
-                nestLevel={nestLevel + 1}
-                index={childrenIndex}
-              />
-            )}
-          />
-        )}
-      </View>
-    </GestureDetector>
+      </GestureDetector>
+      {mission.open && mission.children.length > 0 && (
+        <FlatList
+          data={mission.children}
+          keyExtractor={(item) => item}
+          renderItem={({ item, index: childrenIndex }) => (
+            <Mission
+              id={item}
+              nestLevel={nestLevel + 1}
+              index={childrenIndex}
+            />
+          )}
+        />
+      )}
+    </View>
   );
 };
 

@@ -12,6 +12,7 @@ export const missionsStyles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 20,
+    marginBottom: 10,
+    marginTop: 20,
   },
 });
