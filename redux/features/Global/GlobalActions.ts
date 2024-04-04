@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState, store } from "../../app/store";
-import { SlicesNames } from "../../app/Slices.types";
+import { SLICES_NAMES } from "../../app/Slices.types";
 
 const createGlobalAction = <T, R>(
-  sliceName: keyof typeof SlicesNames,
+  sliceName: keyof typeof SLICES_NAMES,
   actionName: string,
   action: (state: RootState, actionPayload: T) => R
 ) => {
@@ -17,7 +17,7 @@ const createGlobalAction = <T, R>(
 };
 
 export const getMissionsAction = createGlobalAction(
-  SlicesNames.rootMissions,
+  SLICES_NAMES.rootMissions,
   "getMissionsAction",
   (state, actionPayload: string) => {
     return { missions: state.missions.missions, key: actionPayload };

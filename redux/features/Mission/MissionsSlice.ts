@@ -9,7 +9,7 @@ import {
   editMissionTitlePayload,
 } from "./MissionsSlice.types";
 import { recursiveDeleteMission } from "./MissionsSlice.utils";
-import { SlicesNames } from "../../app/Slices.types";
+import { SLICES_NAMES } from "../../app/Slices.types";
 
 type MissionsSliceState = {
   missions: Record<string, MissionStoreType>;
@@ -22,7 +22,7 @@ const initialState: MissionsSliceState = {
 };
 
 export const MissionsSlice = createSlice({
-  name: SlicesNames.missions,
+  name: SLICES_NAMES.missions,
   initialState,
   reducers: {
     setMissions: (
