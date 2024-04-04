@@ -14,74 +14,7 @@ type RootMissionsSliceState = {
 };
 
 const initialState: RootMissionsSliceState = {
-  rootMissions: {
-    0: {
-      key: "0",
-      missions: {
-        root: {
-          open: false,
-          parent: null,
-          text: "",
-          children: ["1", "3"],
-        },
-        1: {
-          open: false,
-          parent: "root",
-          text: "111111",
-          children: ["2"],
-        },
-        2: {
-          open: false,
-          parent: "1",
-          text: "222222",
-          children: [],
-        },
-        3: {
-          open: false,
-          parent: "root",
-          text: "222222",
-          children: [],
-        },
-      },
-      title: "kukuriku",
-    },
-    1: {
-      key: "1",
-      missions: {
-        root: {
-          open: false,
-          parent: null,
-          text: "",
-          children: ["2"],
-        },
-        2: {
-          open: false,
-          parent: "root",
-          text: "222222",
-          children: [],
-        },
-      },
-      title: "kukuriku2",
-    },
-    2: {
-      key: "2",
-      missions: {
-        root: {
-          open: false,
-          parent: null,
-          text: "",
-          children: ["3"],
-        },
-        3: {
-          open: false,
-          parent: "root",
-          text: "3333333",
-          children: [],
-        },
-      },
-      title: "kukuriku3",
-    },
-  },
+  rootMissions: {},
 };
 
 export const RootMissionsSlice = createSlice({
