@@ -11,13 +11,12 @@ import {
   addMission,
   focusedMissionSelector,
   MissionKeysSelector,
-  MissionsSelector,
 } from "../../redux/features/Mission/MissionsSlice";
 import { globalStyles } from "../../styles/globals.styles";
 import Mission from "../../components/Mission/Mission";
 import { missionsStyles } from "./Missions.styles";
 import { AntDesign } from "@expo/vector-icons";
-import { setRootMissionMissions } from "../../redux/features/RootMissions/RootMissionsSlice";
+import { setMissionToRootMission } from "../../redux/features/Global/GlobalActions";
 
 interface MissionsProps extends HomeStackNavigatorMissionsProps {}
 
@@ -27,13 +26,10 @@ const Missions: React.FC<MissionsProps> = ({
 }: MissionsProps) => {
   const dispatch = useAppDispatch();
   const missions = useAppSelector(MissionKeysSelector);
-  const allMissions = useAppSelector(MissionsSelector);
   const focusedMission = useAppSelector(focusedMissionSelector);
 
   const handleBackPress = () => {
-    dispatch(
-      setRootMissionMissions({ key: route.params.key, missions: allMissions })
-    );
+    dispatch(setMissionToRootMission(route.params.key));
     navigation.goBack();
   };
 
