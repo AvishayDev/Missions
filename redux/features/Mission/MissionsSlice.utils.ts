@@ -9,3 +9,21 @@ export const recursiveDeleteMission = (
   });
   delete missions[id];
 };
+
+export const changeParent = (
+  missions: Record<string, MissionStoreType>,
+  id: string,
+  newParent: string,
+  insertToParent: (
+    missions: Record<string, MissionStoreType>,
+    id: string,
+    newParent: string
+  ) => void
+) => {
+  const { parent: oldParent } = missions[id];
+  missions[oldParent!].children = missions[oldParent!].children.filter(
+    (child) => child !== id
+  );
+  missions[id].parent = newParent;
+  insertToParent(missions, id, newParent);
+};

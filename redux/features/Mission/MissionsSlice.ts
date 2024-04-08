@@ -8,7 +8,7 @@ import {
   SourceMissionPayload,
   editMissionTitlePayload,
 } from "./MissionsSlice.types";
-import { recursiveDeleteMission } from "./MissionsSlice.utils";
+import { changeParent, recursiveDeleteMission } from "./MissionsSlice.utils";
 import { SLICES_NAMES } from "../../app/Slices.types";
 
 type MissionsSliceState = {
@@ -67,15 +67,12 @@ export const MissionsSlice = createSlice({
     },
     convertToChild: (state, action: PayloadAction<SourceMissionPayload>) => {
       const { id, index } = action.payload;
-
       const { parent: oldParent } = state.missions[id];
       const newParent = state.missions[oldParent!].children[index - 1];
 
-      state.missions[oldParent!].children = state.missions[
-        oldParent!
-      ].children.filter((child) => child !== id);
-      state.missions[id].parent = newParent;
-      state.missions[newParent!].children.push(id);
+      changeParent(state.missions, id, newParent, (missions) => {
+        missions[newParent!].children.push(id);
+      });
       state.missions[newParent!].open = true;
     },
     convertToBrother: (state, action: PayloadAction<SourceMissionPayload>) => {
@@ -83,22 +80,19 @@ export const MissionsSlice = createSlice({
       const { parent: oldParent } = state.missions[id];
       const { parent: newParent } = state.missions[oldParent!];
 
-      state.missions[oldParent!].children = state.missions[
-        oldParent!
-      ].children.filter((child) => child !== id);
-      state.missions[id].parent = newParent;
+      changeParent(state.missions, id, newParent!, (missions) => {
+        const oldParentIndex = missions[newParent!].children.findIndex(
+          (child) => child === oldParent
+        );
+        const insertIndex =
+          missions[oldParent!].children.length &&
+          index <= Math.floor(missions[oldParent!].children.length / 2)
+            ? oldParentIndex
+            : oldParentIndex + 1;
+
+        missions[newParent!].children.splice(insertIndex, 0, id);
+      });
       state.missions[newParent!].open = true;
-
-      const oldParentIndex = state.missions[newParent!].children.findIndex(
-        (child) => child === oldParent
-      );
-      const insertIndex =
-        state.missions[oldParent!].children.length &&
-        index <= Math.floor(state.missions[oldParent!].children.length / 2)
-          ? oldParentIndex
-          : oldParentIndex + 1;
-
-      state.missions[newParent!].children.splice(insertIndex, 0, id);
     },
   },
 });
