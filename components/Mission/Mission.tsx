@@ -90,17 +90,16 @@ const Mission: React.FC<MissionProps> = ({
         </View>
       </GestureDetector>
       {mission.open && mission.children.length > 0 && (
-        <FlatList
-          data={mission.children}
-          keyExtractor={(item) => item}
-          renderItem={({ item, index: childrenIndex }) => (
+        <View>
+          {mission.children.map((child, childrenIndex) => (
             <Mission
-              id={item}
+              key={child}
+              id={child}
               nestLevel={nestLevel + 1}
               index={childrenIndex}
             />
-          )}
-        />
+          ))}
+        </View>
       )}
     </View>
   );

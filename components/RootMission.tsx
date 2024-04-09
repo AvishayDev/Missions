@@ -6,6 +6,8 @@ import { ROUTES } from "../constants/routes";
 import { RootMissionStoreType } from "../types/Missions.types";
 import { globalStyles } from "../styles/globals.styles";
 import { removeRootMission } from "../redux/features/RootMissions/RootMissionsSlice";
+import { StyleSheet } from "react-native";
+import { ROOT_MISSION_HEIGHT } from "../pages/Home/Home.consts";
 
 interface RootMissionProps extends HomeStackNavigatorHomeProps {
   data: RootMissionStoreType;
@@ -24,7 +26,10 @@ const RootMission: React.FC<RootMissionProps> = ({
   };
 
   return (
-    <TouchableOpacity style={globalStyles.rowContainer} onPress={handlePress}>
+    <TouchableOpacity
+      style={[globalStyles.rowContainer, styles.rootMissionContainer]}
+      onPress={handlePress}
+    >
       <Button
         title="del"
         onPress={() => dispatch(removeRootMission(data.key))}
@@ -35,3 +40,9 @@ const RootMission: React.FC<RootMissionProps> = ({
 };
 
 export default RootMission;
+
+const styles = StyleSheet.create({
+  rootMissionContainer: {
+    height: ROOT_MISSION_HEIGHT,
+  },
+});

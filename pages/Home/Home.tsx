@@ -1,4 +1,10 @@
-import { Button, FlatList, Text, TextInput, View } from "react-native";
+import {
+  Button,
+  KeyboardAvoidingView,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { HomeStackNavigatorHomeProps } from "../../types/routes.types";
 import { WELCOME_MESSAGES } from "../../constants/messages.consts";
 import { getRandomElement } from "../../utils/functions/globalFunctions";
@@ -11,6 +17,7 @@ import {
   addRootMission,
 } from "../../redux/features/RootMissions/RootMissionsSlice";
 import { globalStyles } from "../../styles/globals.styles";
+import { ScrollView } from "react-native-gesture-handler";
 
 interface HomeProps extends HomeStackNavigatorHomeProps {}
 
@@ -26,31 +33,35 @@ const Home: React.FC<HomeProps> = ({ navigation, route }: HomeProps) => {
   };
 
   return (
-    <View style={homeStyles.container}>
-      <Text style={homeStyles.welcomeText}>{welcomeText}</Text>
-      <View
-        style={[homeStyles.rootMissionsContainer, globalStyles.cardContainer]}
-      >
-        <FlatList
-          data={rootMissions}
-          renderItem={({ item }) => (
-            <RootMission data={item} navigation={navigation} route={route} />
-          )}
-        />
-        <View style={globalStyles.rowContainer}>
-          <TextInput
-            style={[homeStyles.addTextInput, globalStyles.flex1]}
-            value={newMissionText}
-            onChangeText={setNewMissionText}
-          />
-          <Button
-            disabled={!newMissionText}
-            title="add"
-            onPress={handlePress}
-          />
+    <ScrollView>
+      <KeyboardAvoidingView behavior="position">
+        <Text style={homeStyles.welcomeText}>{welcomeText}</Text>
+        <View style={[globalStyles.cardContainer]}>
+          <View>
+            {rootMissions.map((rootMission) => (
+              <RootMission
+                key={rootMission.key}
+                data={rootMission}
+                navigation={navigation}
+                route={route}
+              />
+            ))}
+          </View>
+          <View style={globalStyles.rowContainer}>
+            <TextInput
+              style={[globalStyles.flex1]}
+              value={newMissionText}
+              onChangeText={setNewMissionText}
+            />
+            <Button
+              disabled={!newMissionText}
+              title="add"
+              onPress={handlePress}
+            />
+          </View>
         </View>
-      </View>
-    </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
