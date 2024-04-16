@@ -17,4 +17,7 @@ export const globalStyles = StyleSheet.create({
   flex1: {
     flex: 1,
   },
+  width100: {
+    width: "100%",
+  },
 });

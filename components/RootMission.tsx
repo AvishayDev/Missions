@@ -26,10 +26,7 @@ const RootMission: React.FC<RootMissionProps> = ({
   };
 
   return (
-    <TouchableOpacity
-      style={[globalStyles.rowContainer, styles.rootMissionContainer]}
-      onPress={handlePress}
-    >
+    <TouchableOpacity style={globalStyles.rowContainer} onPress={handlePress}>
       <Button
         title="del"
         onPress={() => dispatch(removeRootMission(data.key))}
