@@ -15,4 +15,10 @@ export const missionsStyles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 20,
   },
+  rootView: {
+    height: "100%",
+    width: "100%",
+    marginTop: 20,
+    backgroundColor: "red",
+  },
 });

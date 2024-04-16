@@ -33,35 +33,33 @@ const Home: React.FC<HomeProps> = ({ navigation, route }: HomeProps) => {
   };
 
   return (
-    <ScrollView>
-      <KeyboardAvoidingView behavior="position">
-        <Text style={homeStyles.welcomeText}>{welcomeText}</Text>
-        <View style={[globalStyles.cardContainer]}>
-          <View>
-            {rootMissions.map((rootMission) => (
-              <RootMission
-                key={rootMission.key}
-                data={rootMission}
-                navigation={navigation}
-                route={route}
-              />
-            ))}
-          </View>
-          <View style={globalStyles.rowContainer}>
-            <TextInput
-              style={[globalStyles.flex1]}
-              value={newMissionText}
-              onChangeText={setNewMissionText}
+    <View>
+      <Text style={homeStyles.welcomeText}>{welcomeText}</Text>
+      <View style={[globalStyles.cardContainer]}>
+        <View>
+          {rootMissions.map((rootMission) => (
+            <RootMission
+              key={rootMission.key}
+              data={rootMission}
+              navigation={navigation}
+              route={route}
             />
-            <Button
-              disabled={!newMissionText}
-              title="add"
-              onPress={handlePress}
-            />
-          </View>
+          ))}
         </View>
-      </KeyboardAvoidingView>
-    </ScrollView>
+        <View style={globalStyles.rowContainer}>
+          <TextInput
+            style={[globalStyles.flex1]}
+            value={newMissionText}
+            onChangeText={setNewMissionText}
+          />
+          <Button
+            disabled={!newMissionText}
+            title="add"
+            onPress={handlePress}
+          />
+        </View>
+      </View>
+    </View>
   );
 };
 

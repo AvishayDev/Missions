@@ -13,7 +13,6 @@ import {
   focusedMissionSelector,
   MissionKeysSelector,
 } from "../../redux/features/Mission/MissionsSlice";
-import { globalStyles } from "../../styles/globals.styles";
 import Mission from "../../components/Mission/Mission";
 import { missionsStyles } from "./Missions.styles";
 import { AntDesign } from "@expo/vector-icons";
@@ -36,8 +35,8 @@ const Missions: React.FC<MissionsProps> = ({
   };
 
   return (
-    <ScrollView>
-      <KeyboardAvoidingView behavior="position">
+    <KeyboardAvoidingView style={missionsStyles.rootView} behavior="padding">
+      <ScrollView>
         <View style={missionsStyles.headerContainer}>
           <AntDesign
             name="left"
@@ -47,13 +46,22 @@ const Missions: React.FC<MissionsProps> = ({
           />
           <Text style={missionsStyles.pageTitle}>{route.params.title}</Text>
         </View>
-        <View style={[globalStyles.cardContainer]}>
-          <View>
+        <View style={[{ backgroundColor: "blue" }]}>
+          <View
+            style={{
+              position: "relative",
+              display: "flex",
+              flex: 1,
+              flexGrow: 1,
+              backgroundColor: "yellow",
+              height: "100%",
+            }}
+          >
             {missions.map((mission, index) => (
               <Mission key={mission} id={mission} nestLevel={0} index={index} />
             ))}
           </View>
-          {/* <TouchableWithoutFeedback
+          <TouchableWithoutFeedback
             onPress={() =>
               focusedMission
                 ? Keyboard.dismiss()
@@ -65,10 +73,16 @@ const Missions: React.FC<MissionsProps> = ({
                   )
             }
           >
-          </TouchableWithoutFeedback> */}
+            <View
+              style={{
+                height: "100%",
+                backgroundColor: "green",
+              }}
+            />
+          </TouchableWithoutFeedback>
         </View>
-      </KeyboardAvoidingView>
-    </ScrollView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
