@@ -5,6 +5,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
+  Button,
 } from "react-native";
 import { HomeStackNavigatorMissionsProps } from "../../types/routes.types";
 import { useAppDispatch, useAppSelector } from "../../redux/app/hooks";
@@ -35,54 +36,53 @@ const Missions: React.FC<MissionsProps> = ({
   };
 
   return (
-    <KeyboardAvoidingView style={missionsStyles.rootView} behavior="padding">
-      <ScrollView>
-        <View style={missionsStyles.headerContainer}>
-          <AntDesign
-            name="left"
-            size={30}
-            color="black"
-            onPress={handleBackPress}
-          />
-          <Text style={missionsStyles.pageTitle}>{route.params.title}</Text>
-        </View>
-        <View style={[{ backgroundColor: "blue" }]}>
-          <View
-            style={{
-              position: "relative",
-              display: "flex",
-              flex: 1,
-              flexGrow: 1,
-              backgroundColor: "yellow",
-              height: "100%",
-            }}
-          >
-            {missions.map((mission, index) => (
-              <Mission key={mission} id={mission} nestLevel={0} index={index} />
-            ))}
+    <TouchableWithoutFeedback
+      onPress={() =>
+        focusedMission
+          ? Keyboard.dismiss()
+          : dispatch(
+              addMission({
+                id: missions[missions.length - 1],
+                index: missions.length && missions.length - 1,
+              })
+            )
+      }
+    >
+      <KeyboardAvoidingView style={missionsStyles.rootView} behavior="padding">
+        <ScrollView>
+          <View style={missionsStyles.headerContainer}>
+            <AntDesign
+              name="left"
+              size={30}
+              color="black"
+              onPress={handleBackPress}
+            />
+            <Text style={missionsStyles.pageTitle}>{route.params.title}</Text>
           </View>
-          <TouchableWithoutFeedback
-            onPress={() =>
-              focusedMission
-                ? Keyboard.dismiss()
-                : dispatch(
-                    addMission({
-                      id: missions[missions.length - 1],
-                      index: missions.length && missions.length - 1,
-                    })
-                  )
-            }
-          >
+          <View style={[{ backgroundColor: "blue" }]}>
             <View
               style={{
+                position: "relative",
+                display: "flex",
+                flex: 1,
+                flexGrow: 1,
+                backgroundColor: "yellow",
                 height: "100%",
-                backgroundColor: "green",
               }}
-            />
-          </TouchableWithoutFeedback>
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+            >
+              {missions.map((mission, index) => (
+                <Mission
+                  key={mission}
+                  id={mission}
+                  nestLevel={0}
+                  index={index}
+                />
+              ))}
+            </View>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 

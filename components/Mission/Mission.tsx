@@ -26,8 +26,7 @@ import {
   Gesture,
   GestureDetector,
 } from "react-native-gesture-handler";
-import { runOnJS, runOnUI } from "react-native-reanimated";
-import { runWithWorklet } from "../../utils/functions/globalFunctions";
+import { runOnJS } from "react-native-reanimated";
 
 interface MissionProps {
   id: string;
@@ -75,10 +74,11 @@ const Mission: React.FC<MissionProps> = ({
             style={globalStyles.flex1}
             value={mission.text}
             onChangeText={(text) => dispatch(editMissionTitle({ id, text }))}
-            onSubmitEditing={() =>
-              mission.text && dispatch(addMission({ id, index }))
-            }
+            onSubmitEditing={() => {
+              mission.text && dispatch(addMission({ id, index }));
+            }}
             autoFocus={!mission.text}
+            blurOnSubmit={!mission.text}
           />
 
           {mission.children.length > 0 && (
